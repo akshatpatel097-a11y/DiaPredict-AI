@@ -126,6 +126,15 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def send_html(self, content, status_code=200):
+        body = content.encode("utf-8") if isinstance(content, str) else content
+        self.send_response(status_code)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(body)
+
     def do_OPTIONS(self):
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -136,6 +145,24 @@ class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         path = self.path.split("?")[0].rstrip("/")
         model = get_model()
+
+        # If root or index is requested, serve the frontend HTML application
+        if path in ("", "/", "/index", "/index.html", "/app") or not path.startswith("/api"):
+            html_candidates = [
+                Path(__file__).resolve().parent / "index.html",
+                Path(__file__).resolve().parent.parent / "public" / "index.html",
+                Path(__file__).resolve().parent.parent / "index.html",
+                Path("public/index.html"),
+                Path("index.html"),
+            ]
+            for hp in html_candidates:
+                if hp.exists():
+                    try:
+                        with open(hp, "r", encoding="utf-8") as f:
+                            self.send_html(f.read())
+                            return
+                    except Exception:
+                        pass
 
         if path in ("/api/test", "/api/run-tests") or path.endswith("/test") or path.endswith("/run-tests"):
             try:
@@ -152,7 +179,7 @@ class handler(BaseHTTPRequestHandler):
                 self.send_json({"status": "error", "message": str(e)}, 500)
             return
 
-        if path in ("/api/health", "/api", "/api/index.py", "") or path.endswith("/health"):
+        if path in ("/api/health", "/api/status", "/api", "/health") or path.endswith("/health") or path.endswith("/status"):
             self.send_json({
                 "status": "healthy",
                 "service": "DiaPredict AI CDSS Vercel Serverless API",
