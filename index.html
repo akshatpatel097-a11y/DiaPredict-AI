@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DiaPredict AI — Clinical Decision Support System (CDSS)</title>
-    <meta name="description" content="Hospital-grade Clinical Decision Support System for Type 2 Diabetes Mellitus risk stratification using 6 core physiological biomarkers.">
+    <meta name="description"
+        content="Hospital-grade Clinical Decision Support System for Type 2 Diabetes Mellitus risk stratification using 6 core physiological biomarkers.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg-base: #060e1a;
@@ -224,8 +228,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Preset Cohort Buttons */
@@ -407,7 +418,8 @@
             margin-top: 0.8rem;
         }
 
-        .clinical-table th, .clinical-table td {
+        .clinical-table th,
+        .clinical-table td {
             padding: 9px 12px;
             text-align: left;
         }
@@ -488,6 +500,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Hero Header -->
@@ -499,7 +512,8 @@
                 <span class="badge badge-protocol">6-Biomarker Panel</span>
             </h1>
             <p class="hero-subtitle">
-                Hospital Clinical Decision Support System (CDSS) for automated risk stratification of Type 2 Diabetes Mellitus based on 6 calibrated biomarkers with clinical unmeasured-test imputation.
+                Hospital Clinical Decision Support System (CDSS) for automated risk stratification of Type 2 Diabetes
+                Mellitus based on 6 calibrated biomarkers with clinical unmeasured-test imputation.
             </p>
         </header>
 
@@ -522,7 +536,8 @@
             <div class="panel-card" style="border-color: var(--teal-primary);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
                     <h3 style="margin: 0; color: #f8fafc;">🧪 Benchmark Telemetry Verification</h3>
-                    <button class="btn btn-secondary" onclick="closeTestPanel()" style="padding: 0.35rem 0.8rem; font-size: 0.8rem;">✕ Close</button>
+                    <button class="btn btn-secondary" onclick="closeTestPanel()"
+                        style="padding: 0.35rem 0.8rem; font-size: 0.8rem;">✕ Close</button>
                 </div>
                 <div class="stats-grid">
                     <div class="stat-box">
@@ -559,10 +574,15 @@
         <div id="tab-triage" class="tab-content active">
             <!-- Preset Cohorts -->
             <div class="preset-bar">
-                <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); align-self: center;">Clinical Archetypes:</span>
-                <button class="btn-preset" onclick="loadPreset(1, 88, 68, 22.4, 0.28, 24)">🟢 Normoglycemic Cohort</button>
-                <button class="btn-preset" onclick="loadPreset(3, 115, 76, 28.5, 0.52, 41)">🟡 Impaired Fasting Cohort</button>
-                <button class="btn-preset" onclick="loadPreset(6, 168, 88, 35.6, 1.15, 52)">🔴 Diabetic Syndrome Cohort</button>
+                <span
+                    style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); align-self: center;">Clinical
+                    Archetypes:</span>
+                <button class="btn-preset" onclick="loadPreset(1, 88, 68, 22.4, 0.28, 24)">🟢 Normoglycemic
+                    Cohort</button>
+                <button class="btn-preset" onclick="loadPreset(3, 115, 76, 28.5, 0.52, 41)">🟡 Impaired Fasting
+                    Cohort</button>
+                <button class="btn-preset" onclick="loadPreset(6, 168, 88, 35.6, 1.15, 52)">🔴 Diabetic Syndrome
+                    Cohort</button>
             </div>
 
             <div class="two-col-grid">
@@ -573,491 +593,580 @@
                     <!-- Glucose -->
                     <div class="form-group">
                         <div class="form-header">
+
                             <label for="inp-glucose">Plasma Glucose (FPG)</label>
                             <span class="val-display" id="val-glucose">120 mg/dL</span>
                         </div>
-                        <input type="range" id="inp-glucose" min="40" max="300" step="1" value="120" oninput="updatePredict()">
+                        <input type="range" id="inp-glucose" min="40" max="300" step="1" value="120"
+                            oninput="updatePredict()">
                         <div class="help-text">ADA Fasting: <100 Normal | 100–125 Prediabetes | ≥126 Diabetic</div>
-                    </div>
-
-                    <!-- BMI -->
-                    <div class="form-group">
-                        <div class="form-header">
-                            <label for="inp-bmi">Body Mass Index (BMI)</label>
-                            <span class="val-display" id="val-bmi">28.1 kg/m²</span>
                         </div>
-                        <input type="range" id="inp-bmi" min="10" max="70" step="0.1" value="28.1" oninput="updatePredict()">
-                        <div class="help-text">WHO: 18.5–24.9 Normal | 25–29.9 Overweight | ≥30 Obese</div>
-                    </div>
 
-                    <!-- Blood Pressure -->
-                    <div class="form-group">
-                        <div class="form-header">
-                            <label for="inp-bp">Diastolic Blood Pressure</label>
-                            <span class="val-display" id="val-bp">72 mm Hg</span>
+                        <!-- BMI -->
+                        <div class="form-group">
+                            <div class="form-header">
+                                <label for="inp-bmi">Body Mass Index (BMI)</label>
+                                <span class="val-display" id="val-bmi">28.1 kg/m²</span>
+                            </div>
+                            <input type="range" id="inp-bmi" min="10" max="70" step="0.1" value="28.1"
+                                oninput="updatePredict()">
+                            <div class="help-text">WHO: 18.5–24.9 Normal | 25–29.9 Overweight | ≥30 Obese</div>
                         </div>
-                        <input type="range" id="inp-bp" min="30" max="140" step="1" value="72" oninput="updatePredict()">
-                        <div class="help-text">AHA/ACC: <80 Normal | 80–89 Stage 1 | ≥90 Stage 2</div>
-                    </div>
 
-                    <!-- Age -->
-                    <div class="form-group">
-                        <div class="form-header">
-                            <label for="inp-age">Patient Age</label>
-                            <span class="val-display" id="val-age">33 yrs</span>
-                        </div>
-                        <input type="range" id="inp-age" min="1" max="120" step="1" value="33" oninput="updatePredict()">
-                        <div class="help-text">Demographic cohort risk stratification</div>
-                    </div>
+                        <!-- Blood Pressure -->
+                        <div class="form-group">
+                            <div class="form-header">
+                                <label for="inp-bp">Diastolic Blood Pressure</label>
+                                <span class="val-display" id="val-bp">72 mm Hg</span>
+                            </div>
+                            <input type="range" id="inp-bp" min="30" max="140" step="1" value="72"
+                                oninput="updatePredict()">
+                            <div class="help-text">AHA/ACC: <80 Normal | 80–89 Stage 1 | ≥90 Stage 2</div>
+                            </div>
 
-                    <!-- Pregnancies -->
-                    <div class="form-group">
-                        <div class="form-header">
-                            <label for="inp-preg">Pregnancies / Parity</label>
-                            <span class="val-display" id="val-preg">2</span>
-                        </div>
-                        <input type="range" id="inp-preg" min="0" max="20" step="1" value="2" oninput="updatePredict()">
-                        <div class="help-text">Total obstetric gestational history</div>
-                    </div>
+                            <!-- Age -->
+                            <div class="form-group">
+                                <div class="form-header">
+                                    <label for="inp-age">Patient Age</label>
+                                    <span class="val-display" id="val-age">33 yrs</span>
+                                </div>
+                                <input type="range" id="inp-age" min="1" max="120" step="1" value="33"
+                                    oninput="updatePredict()">
+                                <div class="help-text">Demographic cohort risk stratification</div>
+                            </div>
 
-                    <!-- Pedigree Function -->
-                    <div class="form-group">
-                        <div class="form-header">
-                            <label for="inp-dpf">Diabetes Pedigree Score (DPF)</label>
-                            <span class="val-display" id="val-dpf">0.47</span>
+                            <!-- Pregnancies -->
+                            <div class="form-group">
+                                <div class="form-header">
+                                    <label for="inp-preg">Pregnancies / Parity</label>
+                                    <span class="val-display" id="val-preg">2</span>
+                                </div>
+                                <input type="range" id="inp-preg" min="0" max="20" step="1" value="2"
+                                    oninput="updatePredict()">
+                                <div class="help-text">Total obstetric gestational history</div>
+                            </div>
+
+                            <!-- Pedigree Function -->
+                            <div class="form-group">
+                                <div class="form-header">
+                                    <label for="inp-dpf">Diabetes Pedigree Score (DPF)</label>
+                                    <span class="val-display" id="val-dpf">0.47</span>
+                                </div>
+                                <input type="range" id="inp-dpf" min="0.05" max="2.50" step="0.01" value="0.47"
+                                    oninput="updatePredict()">
+                                <div class="help-text">Genetic family history predisposition coefficient</div>
+                            </div>
                         </div>
-                        <input type="range" id="inp-dpf" min="0.05" max="2.50" step="0.01" value="0.47" oninput="updatePredict()">
-                        <div class="help-text">Genetic family history predisposition coefficient</div>
+
+                        <!-- Diagnostics Column -->
+                        <div class="panel-card">
+                            <h3>📋 Clinical Triage Evaluation</h3>
+
+                            <!-- Triage Output Card -->
+                            <div id="triage-card" class="triage-card triage-low">
+                                <div id="triage-icon" style="font-size: 2.3rem;">🛡️</div>
+                                <div id="triage-title" class="triage-title" style="color: #10b981;">TRIAGE LEVEL: LOW
+                                    RISK</div>
+                                <div id="triage-prob" class="triage-prob" style="color: #34d399;">85.0%</div>
+                                <div id="triage-desc" style="color: #cbd5e1; font-size: 0.88rem;">Estimated
+                                    Normoglycemic Probability</div>
+                            </div>
+
+                            <div class="progress-bar-bg">
+                                <div id="progress-fill" class="progress-bar-fill"
+                                    style="width: 15%; background: #10b981;"></div>
+                            </div>
+
+                            <!-- Clinical Advisory Pathway -->
+                            <div id="advisory-box" class="clinical-advisory">
+                                <strong style="color: #34d399;">⚕️ Recommended Clinical Pathway:</strong><br>
+                                • Routine annual preventive metabolic health screening.<br>
+                                • Maintain ADA-aligned balanced nutrition and ≥150 min/week moderate physical
+                                activity.<br>
+                                • Reassess if clinical symptoms, gestational factors, or BMI elevate.
+                            </div>
+
+                            <!-- Laboratory Biomarker Table -->
+                            <h4 style="font-size: 0.95rem; margin-top: 1.5rem; color: var(--teal-light);">🔬 Laboratory
+                                Biomarker Analysis</h4>
+                            <table class="clinical-table">
+                                <thead>
+                                    <tr>
+                                        <th>Biomarker</th>
+                                        <th>Value</th>
+                                        <th>Reference</th>
+                                        <th>Classification</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-biomarkers"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Diagnostics Column -->
-                <div class="panel-card">
-                    <h3>📋 Clinical Triage Evaluation</h3>
-
-                    <!-- Triage Output Card -->
-                    <div id="triage-card" class="triage-card triage-low">
-                        <div id="triage-icon" style="font-size: 2.3rem;">🛡️</div>
-                        <div id="triage-title" class="triage-title" style="color: #10b981;">TRIAGE LEVEL: LOW RISK</div>
-                        <div id="triage-prob" class="triage-prob" style="color: #34d399;">85.0%</div>
-                        <div id="triage-desc" style="color: #cbd5e1; font-size: 0.88rem;">Estimated Normoglycemic Probability</div>
-                    </div>
-
-                    <div class="progress-bar-bg">
-                        <div id="progress-fill" class="progress-bar-fill" style="width: 15%; background: #10b981;"></div>
-                    </div>
-
-                    <!-- Clinical Advisory Pathway -->
-                    <div id="advisory-box" class="clinical-advisory">
-                        <strong style="color: #34d399;">⚕️ Recommended Clinical Pathway:</strong><br>
-                        • Routine annual preventive metabolic health screening.<br>
-                        • Maintain ADA-aligned balanced nutrition and ≥150 min/week moderate physical activity.<br>
-                        • Reassess if clinical symptoms, gestational factors, or BMI elevate.
-                    </div>
-
-                    <!-- Laboratory Biomarker Table -->
-                    <h4 style="font-size: 0.95rem; margin-top: 1.5rem; color: var(--teal-light);">🔬 Laboratory Biomarker Analysis</h4>
-                    <table class="clinical-table">
-                        <thead>
-                            <tr>
-                                <th>Biomarker</th>
-                                <th>Value</th>
-                                <th>Reference</th>
-                                <th>Classification</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-biomarkers"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 2: Clinical Validation Suite -->
-        <div id="tab-validation" class="tab-content">
-            <div class="panel-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
-                    <div>
-                        <h3 style="margin-bottom: 0.2rem;">🧪 Standardized Clinical Protocol Verification</h3>
-                        <p style="color: var(--text-muted); font-size: 0.85rem;">8 verified patient benchmark archetypes tested against the 6-biomarker decision tree model.</p>
-                    </div>
-                    <button class="btn btn-primary" onclick="runTestSuite()">▶️ Start the Test</button>
-                </div>
-                <div id="tab-test-results-mount"></div>
-            </div>
-        </div>
-
-        <!-- TAB 3: CDSS Performance Metrics -->
-        <div id="tab-metrics" class="tab-content">
-            <div class="panel-card">
-                <h3>📊 Model Performance & Validation Metrics</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Evaluated on an independent 20% stratified holdout test cohort (154 patient records).</p>
-                <div class="stats-grid">
-                    <div class="stat-box">
-                        <div class="stat-label">Accuracy</div>
-                        <div class="stat-value">77.9%</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-label">Precision (PPV)</div>
-                        <div class="stat-value">66.7%</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-label">Sensitivity</div>
-                        <div class="stat-value">74.1%</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-label">5-Fold CV F1</div>
-                        <div class="stat-value">67.7%</div>
+                <!-- TAB 2: Clinical Validation Suite -->
+                <div id="tab-validation" class="tab-content">
+                    <div class="panel-card">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <h3 style="margin-bottom: 0.2rem;">🧪 Standardized Clinical Protocol Verification</h3>
+                                <p style="color: var(--text-muted); font-size: 0.85rem;">8 verified patient benchmark
+                                    archetypes tested against the 6-biomarker decision tree model.</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="runTestSuite()">▶️ Start the Test</button>
+                        </div>
+                        <div id="tab-test-results-mount"></div>
                     </div>
                 </div>
 
-                <div class="two-col-grid" style="margin-top: 1.5rem;">
-                    <div>
-                        <h4 style="color: var(--teal-light); margin-bottom: 0.8rem;">🎯 Biomarker Relative Clinical Importance</h4>
+                <!-- TAB 3: CDSS Performance Metrics -->
+                <div id="tab-metrics" class="tab-content">
+                    <div class="panel-card">
+                        <h3>📊 Model Performance & Validation Metrics</h3>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Evaluated on an
+                            independent 20% stratified holdout test cohort (154 patient records).</p>
+                        <div class="stats-grid">
+                            <div class="stat-box">
+                                <div class="stat-label">Accuracy</div>
+                                <div class="stat-value">77.9%</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Precision (PPV)</div>
+                                <div class="stat-value">66.7%</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Sensitivity</div>
+                                <div class="stat-value">74.1%</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">5-Fold CV F1</div>
+                                <div class="stat-value">67.7%</div>
+                            </div>
+                        </div>
+
+                        <div class="two-col-grid" style="margin-top: 1.5rem;">
+                            <div>
+                                <h4 style="color: var(--teal-light); margin-bottom: 0.8rem;">🎯 Biomarker Relative
+                                    Clinical Importance</h4>
+                                <table class="clinical-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Feature</th>
+                                            <th>Importance Weight</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Glucose (FPG)</strong></td>
+                                            <td><span class="ref-badge ref-normal">52.3%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Body Mass Index (BMI)</strong></td>
+                                            <td><span class="ref-badge ref-normal">18.6%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Patient Age</strong></td>
+                                            <td><span class="ref-badge ref-normal">11.4%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Diabetes Pedigree (DPF)</strong></td>
+                                            <td><span class="ref-badge ref-normal">8.7%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Diastolic Blood Pressure</strong></td>
+                                            <td><span class="ref-badge ref-normal">5.1%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Pregnancies</strong></td>
+                                            <td><span class="ref-badge ref-normal">3.9%</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                <h4 style="color: var(--teal-light); margin-bottom: 0.8rem;">🔲 Holdout Confusion Matrix
+                                </h4>
+                                <table class="clinical-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Actual \ Predicted</th>
+                                            <th>Low Risk (0)</th>
+                                            <th>High Risk (1)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Actual Low Risk (0)</strong></td>
+                                            <td style="color: #34d399; font-weight: 700;">80 (TN)</td>
+                                            <td style="color: #f87171;">20 (FP)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Actual High Risk (1)</strong></td>
+                                            <td style="color: #f87171;">14 (FN)</td>
+                                            <td style="color: #34d399; font-weight: 700;">40 (TP)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: Decision Tree Pathway -->
+                <div id="tab-tree" class="tab-content">
+                    <div class="panel-card">
+                        <h3>🌳 Clinical Diagnostic Decision Tree Pathway</h3>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+                            Trained DecisionTreeClassifier with calibrated depth and minimum leaf criteria. Root split
+                            starts on standardized Fasting Plasma Glucose.
+                        </p>
+                        <div
+                            style="background: #08101d; padding: 1.2rem; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #38bdf8; overflow-x: auto; line-height: 1.6;">
+                            |--- Glucose <= 0.28 (Normalized FPG &asymp; 127 mg/dL)<br>
+                                | |--- BMI <= 0.35 (Normalized BMI &asymp; 30.2 kg/m²)<br>
+                                    | | |--- Age <= 0.65 (&asymp; 41 years) &rarr; Class: Low Risk (0) [92.4%]<br>
+                                        | | |--- Age > 0.65 &rarr; Class: Low Risk (0) [68.2%]<br>
+                                        | |--- BMI > 0.35<br>
+                                        | | |--- DPF <= 0.60 &rarr; Class: High Risk (1) [59.5%]<br>
+                                            | | |--- DPF > 0.60 &rarr; Class: High Risk (1) [74.2%]<br>
+                                            |--- Glucose > 0.28<br>
+                                            | |--- BMI <= -0.15 &rarr; Class: Low Risk (0) [52.1%]<br>
+                                                | |--- BMI > -0.15 &rarr; Class: High Risk (1) [88.2%]<br>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: Population Epidemiology Data -->
+                <div id="tab-eda" class="tab-content">
+                    <div class="panel-card">
+                        <h3>📈 Population Epidemiology & Cohort Distributions</h3>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.2rem;">Pima Indians
+                            Diabetes cohort analysis with 3 unmeasured test parameters imputed via median.</p>
                         <table class="clinical-table">
-                            <thead><tr><th>Feature</th><th>Importance Weight</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>Biomarker</th>
+                                    <th>Normal Range</th>
+                                    <th>Unmeasured Zeroes</th>
+                                    <th>Handling Strategy</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td><strong>Glucose (FPG)</strong></td><td><span class="ref-badge ref-normal">52.3%</span></td></tr>
-                                <tr><td><strong>Body Mass Index (BMI)</strong></td><td><span class="ref-badge ref-normal">18.6%</span></td></tr>
-                                <tr><td><strong>Patient Age</strong></td><td><span class="ref-badge ref-normal">11.4%</span></td></tr>
-                                <tr><td><strong>Diabetes Pedigree (DPF)</strong></td><td><span class="ref-badge ref-normal">8.7%</span></td></tr>
-                                <tr><td><strong>Diastolic Blood Pressure</strong></td><td><span class="ref-badge ref-normal">5.1%</span></td></tr>
-                                <tr><td><strong>Pregnancies</strong></td><td><span class="ref-badge ref-normal">3.9%</span></td></tr>
+                                <tr>
+                                    <td><strong>Glucose</strong></td>
+                                    <td>40–300 mg/dL</td>
+                                    <td>5 records (0.7%)</td>
+                                    <td>Imputed via Median</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Blood Pressure</strong></td>
+                                    <td>30–140 mm Hg</td>
+                                    <td>35 records (4.6%)</td>
+                                    <td>Imputed via Median</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>BMI</strong></td>
+                                    <td>10–70 kg/m²</td>
+                                    <td>11 records (1.4%)</td>
+                                    <td>Imputed via Median</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SkinThickness</strong></td>
+                                    <td>—</td>
+                                    <td>227 records (29.6%)</td>
+                                    <td><strong>Permanently Removed</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Insulin</strong></td>
+                                    <td>—</td>
+                                    <td>374 records (48.7%)</td>
+                                    <td><strong>Permanently Removed</strong></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div>
-                        <h4 style="color: var(--teal-light); margin-bottom: 0.8rem;">🔲 Holdout Confusion Matrix</h4>
-                        <table class="clinical-table">
-                            <thead><tr><th>Actual \ Predicted</th><th>Low Risk (0)</th><th>High Risk (1)</th></tr></thead>
-                            <tbody>
-                                <tr><td><strong>Actual Low Risk (0)</strong></td><td style="color: #34d399; font-weight: 700;">80 (TN)</td><td style="color: #f87171;">20 (FP)</td></tr>
-                                <tr><td><strong>Actual High Risk (1)</strong></td><td style="color: #f87171;">14 (FN)</td><td style="color: #34d399; font-weight: 700;">40 (TP)</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- TAB 4: Decision Tree Pathway -->
-        <div id="tab-tree" class="tab-content">
-            <div class="panel-card">
-                <h3>🌳 Clinical Diagnostic Decision Tree Pathway</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
-                    Trained DecisionTreeClassifier with calibrated depth and minimum leaf criteria. Root split starts on standardized Fasting Plasma Glucose.
-                </p>
-                <div style="background: #08101d; padding: 1.2rem; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #38bdf8; overflow-x: auto; line-height: 1.6;">
-                    |--- Glucose <= 0.28 (Normalized FPG &asymp; 127 mg/dL)<br>
-                    |   |--- BMI <= 0.35 (Normalized BMI &asymp; 30.2 kg/m²)<br>
-                    |   |   |--- Age <= 0.65 (&asymp; 41 years) &rarr; Class: Low Risk (0) [92.4%]<br>
-                    |   |   |--- Age > 0.65 &rarr; Class: Low Risk (0) [68.2%]<br>
-                    |   |--- BMI > 0.35<br>
-                    |   |   |--- DPF <= 0.60 &rarr; Class: High Risk (1) [59.5%]<br>
-                    |   |   |--- DPF > 0.60 &rarr; Class: High Risk (1) [74.2%]<br>
-                    |--- Glucose > 0.28<br>
-                    |   |--- BMI <= -0.15 &rarr; Class: Low Risk (0) [52.1%]<br>
-                    |   |--- BMI > -0.15 &rarr; Class: High Risk (1) [88.2%]<br>
-                </div>
-            </div>
-        </div>
+            <script>
+                const TEST_CASES = [
+                    { id: "TC1", vals: { Pregnancies: 0, Glucose: 85, BloodPressure: 66, BMI: 22.0, DiabetesPedigreeFunction: 0.20, Age: 23 }, expected: "Low Risk" },
+                    { id: "TC2", vals: { Pregnancies: 6, Glucose: 180, BloodPressure: 85, BMI: 38.5, DiabetesPedigreeFunction: 0.90, Age: 52 }, expected: "High Risk" },
+                    { id: "TC3", vals: { Pregnancies: 2, Glucose: 126, BloodPressure: 72, BMI: 30.0, DiabetesPedigreeFunction: 0.40, Age: 35 }, expected: "High Risk" },
+                    { id: "TC4", vals: { Pregnancies: 1, Glucose: 95, BloodPressure: 70, BMI: 30.0, DiabetesPedigreeFunction: 0.30, Age: 28 }, expected: "Low Risk" },
+                    { id: "TC5", vals: { Pregnancies: 1, Glucose: 190, BloodPressure: 70, BMI: 26.0, DiabetesPedigreeFunction: 0.35, Age: 30 }, expected: "High Risk" },
+                    { id: "TC6", vals: { Pregnancies: 10, Glucose: 150, BloodPressure: 90, BMI: 42.0, DiabetesPedigreeFunction: 1.20, Age: 60 }, expected: "High Risk" },
+                    { id: "TC7", vals: { Pregnancies: 3, Glucose: 100, BloodPressure: 74, BMI: 24.5, DiabetesPedigreeFunction: 0.25, Age: 29 }, expected: "Low Risk" },
+                    { id: "TC8", vals: { Pregnancies: 0, Glucose: 70, BloodPressure: 60, BMI: 17.5, DiabetesPedigreeFunction: 0.15, Age: 21 }, expected: "Low Risk" }
+                ];
 
-        <!-- TAB 5: Population Epidemiology Data -->
-        <div id="tab-eda" class="tab-content">
-            <div class="panel-card">
-                <h3>📈 Population Epidemiology & Cohort Distributions</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.2rem;">Pima Indians Diabetes cohort analysis with 3 unmeasured test parameters imputed via median.</p>
-                <table class="clinical-table">
-                    <thead><tr><th>Biomarker</th><th>Normal Range</th><th>Unmeasured Zeroes</th><th>Handling Strategy</th></tr></thead>
-                    <tbody>
-                        <tr><td><strong>Glucose</strong></td><td>40–300 mg/dL</td><td>5 records (0.7%)</td><td>Imputed via Median</td></tr>
-                        <tr><td><strong>Blood Pressure</strong></td><td>30–140 mm Hg</td><td>35 records (4.6%)</td><td>Imputed via Median</td></tr>
-                        <tr><td><strong>BMI</strong></td><td>10–70 kg/m²</td><td>11 records (1.4%)</td><td>Imputed via Median</td></tr>
-                        <tr><td><strong>SkinThickness</strong></td><td>—</td><td>227 records (29.6%)</td><td><strong>Permanently Removed</strong></td></tr>
-                        <tr><td><strong>Insulin</strong></td><td>—</td><td>374 records (48.7%)</td><td><strong>Permanently Removed</strong></td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const TEST_CASES = [
-            { id: "TC1", vals: {Pregnancies:0, Glucose:85, BloodPressure:66, BMI:22.0, DiabetesPedigreeFunction:0.20, Age:23}, expected: "Low Risk" },
-            { id: "TC2", vals: {Pregnancies:6, Glucose:180, BloodPressure:85, BMI:38.5, DiabetesPedigreeFunction:0.90, Age:52}, expected: "High Risk" },
-            { id: "TC3", vals: {Pregnancies:2, Glucose:126, BloodPressure:72, BMI:30.0, DiabetesPedigreeFunction:0.40, Age:35}, expected: "High Risk" },
-            { id: "TC4", vals: {Pregnancies:1, Glucose:95, BloodPressure:70, BMI:30.0, DiabetesPedigreeFunction:0.30, Age:28}, expected: "Low Risk" },
-            { id: "TC5", vals: {Pregnancies:1, Glucose:190, BloodPressure:70, BMI:26.0, DiabetesPedigreeFunction:0.35, Age:30}, expected: "High Risk" },
-            { id: "TC6", vals: {Pregnancies:10, Glucose:150, BloodPressure:90, BMI:42.0, DiabetesPedigreeFunction:1.20, Age:60}, expected: "High Risk" },
-            { id: "TC7", vals: {Pregnancies:3, Glucose:100, BloodPressure:74, BMI:24.5, DiabetesPedigreeFunction:0.25, Age:29}, expected: "Low Risk" },
-            { id: "TC8", vals: {Pregnancies:0, Glucose:70, BloodPressure:60, BMI:17.5, DiabetesPedigreeFunction:0.15, Age:21}, expected: "Low Risk" }
-        ];
-
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            btn.classList.add('active');
-            if (tabId === 'tab-validation') {
-                renderTestTable('tab-test-results-mount');
-            }
-        }
-
-        function loadPreset(preg, gluc, bp, bmi, dpf, age) {
-            document.getElementById('inp-preg').value = preg;
-            document.getElementById('inp-glucose').value = gluc;
-            document.getElementById('inp-bp').value = bp;
-            document.getElementById('inp-bmi').value = bmi;
-            document.getElementById('inp-dpf').value = dpf;
-            document.getElementById('inp-age').value = age;
-            updatePredict();
-        }
-
-        function getInputs() {
-            return {
-                Pregnancies: parseFloat(document.getElementById('inp-preg').value),
-                Glucose: parseFloat(document.getElementById('inp-glucose').value),
-                BloodPressure: parseFloat(document.getElementById('inp-bp').value),
-                BMI: parseFloat(document.getElementById('inp-bmi').value),
-                DiabetesPedigreeFunction: parseFloat(document.getElementById('inp-dpf').value),
-                Age: parseFloat(document.getElementById('inp-age').value)
-            };
-        }
-
-        // Exact mathematical decision tree pipeline implementation in pure JS
-        const TREE_MEDIANS = [3.0, 117.0, 72.0, 32.4, 0.3825, 29.0];
-        const SCALER_MEANS = [3.81921824, 121.67100977, 72.14006515, 32.44820847, 0.47742834, 33.36644951];
-        const SCALER_SCALES = [3.31144822, 29.97935076, 12.26511926, 6.81856216, 0.33003119, 11.8237979];
-
-        function evaluateTree(x) {
-            if (x[1] <= 0.19443350) { // Glucose
-                if (x[3] <= -0.81369185) { // BMI
-                    if (x[4] <= 0.53047004) { // DiabetesPedigreeFunction
-                        return [1.00000000, 0.00000000];
-                    } else {
-                        return [0.91043439, 0.08956561];
+                function switchTab(tabId, btn) {
+                    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+                    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+                    document.getElementById(tabId).classList.add('active');
+                    btn.classList.add('active');
+                    if (tabId === 'tab-validation') {
+                        renderTestTable('tab-test-results-mount');
                     }
-                } else {
-                    if (x[5] <= -0.49615610) { // Age
-                        if (x[3] <= -0.16839452) { // BMI
-                            if (x[1] <= -0.55608308) { // Glucose
+                }
+
+                function loadPreset(preg, gluc, bp, bmi, dpf, age) {
+                    document.getElementById('inp-preg').value = preg;
+                    document.getElementById('inp-glucose').value = gluc;
+                    document.getElementById('inp-bp').value = bp;
+                    document.getElementById('inp-bmi').value = bmi;
+                    document.getElementById('inp-dpf').value = dpf;
+                    document.getElementById('inp-age').value = age;
+                    updatePredict();
+                }
+
+                function getInputs() {
+                    return {
+                        Pregnancies: parseFloat(document.getElementById('inp-preg').value),
+                        Glucose: parseFloat(document.getElementById('inp-glucose').value),
+                        BloodPressure: parseFloat(document.getElementById('inp-bp').value),
+                        BMI: parseFloat(document.getElementById('inp-bmi').value),
+                        DiabetesPedigreeFunction: parseFloat(document.getElementById('inp-dpf').value),
+                        Age: parseFloat(document.getElementById('inp-age').value)
+                    };
+                }
+
+                // Exact mathematical decision tree pipeline implementation in pure JS
+                const TREE_MEDIANS = [3.0, 117.0, 72.0, 32.4, 0.3825, 29.0];
+                const SCALER_MEANS = [3.81921824, 121.67100977, 72.14006515, 32.44820847, 0.47742834, 33.36644951];
+                const SCALER_SCALES = [3.31144822, 29.97935076, 12.26511926, 6.81856216, 0.33003119, 11.8237979];
+
+                function evaluateTree(x) {
+                    if (x[1] <= 0.19443350) { // Glucose
+                        if (x[3] <= -0.81369185) { // BMI
+                            if (x[4] <= 0.53047004) { // DiabetesPedigreeFunction
                                 return [1.00000000, 0.00000000];
                             } else {
-                                return [0.91452991, 0.08547009];
+                                return [0.91043439, 0.08956561];
                             }
                         } else {
-                            if (x[4] <= 0.01082219) { // DiabetesPedigreeFunction
-                                if (x[2] <= -0.09295182) { // BloodPressure
-                                    return [1.00000000, 0.00000000];
+                            if (x[5] <= -0.49615610) { // Age
+                                if (x[3] <= -0.16839452) { // BMI
+                                    if (x[1] <= -0.55608308) { // Glucose
+                                        return [1.00000000, 0.00000000];
+                                    } else {
+                                        return [0.91452991, 0.08547009];
+                                    }
                                 } else {
-                                    return [0.71761384, 0.28238616];
+                                    if (x[4] <= 0.01082219) { // DiabetesPedigreeFunction
+                                        if (x[2] <= -0.09295182) { // BloodPressure
+                                            return [1.00000000, 0.00000000];
+                                        } else {
+                                            return [0.71761384, 0.28238616];
+                                        }
+                                    } else {
+                                        return [0.63287783, 0.36712217];
+                                    }
                                 }
                             } else {
-                                return [0.63287783, 0.36712217];
+                                if (x[1] <= -1.07310563) { // Glucose
+                                    return [0.86018875, 0.13981125];
+                                } else {
+                                    if (x[4] <= 0.13050785) { // DiabetesPedigreeFunction
+                                        if (x[1] <= -0.47269236) { // Glucose
+                                            return [0.66523195, 0.33476805];
+                                        } else {
+                                            return [0.40508383, 0.59491617];
+                                        }
+                                    } else {
+                                        if (x[0] <= 0.20558430) { // Pregnancies
+                                            return [0.34853420, 0.65146580];
+                                        } else {
+                                            return [0.14323963, 0.85676037];
+                                        }
+                                    }
+                                }
                             }
                         }
                     } else {
-                        if (x[1] <= -1.07310563) { // Glucose
-                            return [0.86018875, 0.13981125];
-                        } else {
-                            if (x[4] <= 0.13050785) { // DiabetesPedigreeFunction
-                                if (x[1] <= -0.47269236) { // Glucose
-                                    return [0.66523195, 0.33476805];
+                        if (x[1] <= 1.09505337) { // Glucose
+                            if (x[3] <= -0.36638346) { // BMI
+                                if (x[3] <= -0.74036261) { // BMI
+                                    return [0.77212305, 0.22787695];
                                 } else {
-                                    return [0.40508383, 0.59491617];
+                                    return [0.57219251, 0.42780749];
                                 }
                             } else {
-                                if (x[0] <= 0.20558430) { // Pregnancies
-                                    return [0.34853420, 0.65146580];
+                                if (x[4] <= -0.50276563) { // DiabetesPedigreeFunction
+                                    return [0.44521498, 0.55478502];
                                 } else {
-                                    return [0.14323963, 0.85676037];
+                                    if (x[2] <= 0.07011223) { // BloodPressure
+                                        return [0.10625621, 0.89374379];
+                                    } else {
+                                        return [0.27648579, 0.72351421];
+                                    }
                                 }
+                            }
+                        } else {
+                            if (x[0] <= 0.80954966) { // Pregnancies
+                                if (x[1] <= 1.49532896) { // Glucose
+                                    return [0.23132356, 0.76867644];
+                                } else {
+                                    if (x[4] <= 0.30776381) { // DiabetesPedigreeFunction
+                                        return [0.05078310, 0.94921690];
+                                    } else {
+                                        return [0.11797133, 0.88202867];
+                                    }
+                                }
+                            } else {
+                                return [0.01696528, 0.98303472];
                             }
                         }
                     }
                 }
-            } else {
-                if (x[1] <= 1.09505337) { // Glucose
-                    if (x[3] <= -0.36638346) { // BMI
-                        if (x[3] <= -0.74036261) { // BMI
-                            return [0.77212305, 0.22787695];
-                        } else {
-                            return [0.57219251, 0.42780749];
-                        }
-                    } else {
-                        if (x[4] <= -0.50276563) { // DiabetesPedigreeFunction
-                            return [0.44521498, 0.55478502];
-                        } else {
-                            if (x[2] <= 0.07011223) { // BloodPressure
-                                return [0.10625621, 0.89374379];
-                            } else {
-                                return [0.27648579, 0.72351421];
-                            }
-                        }
-                    }
-                } else {
-                    if (x[0] <= 0.80954966) { // Pregnancies
-                        if (x[1] <= 1.49532896) { // Glucose
-                            return [0.23132356, 0.76867644];
-                        } else {
-                            if (x[4] <= 0.30776381) { // DiabetesPedigreeFunction
-                                return [0.05078310, 0.94921690];
-                            } else {
-                                return [0.11797133, 0.88202867];
-                            }
-                        }
-                    } else {
-                        return [0.01696528, 0.98303472];
-                    }
+
+                function predictClinicalRisk(vals) {
+                    const raw = [
+                        vals.Pregnancies,
+                        vals.Glucose === 0 ? TREE_MEDIANS[1] : vals.Glucose,
+                        vals.BloodPressure === 0 ? TREE_MEDIANS[2] : vals.BloodPressure,
+                        vals.BMI === 0 ? TREE_MEDIANS[3] : vals.BMI,
+                        vals.DiabetesPedigreeFunction,
+                        vals.Age
+                    ];
+                    const scaled = raw.map((v, i) => (v - SCALER_MEANS[i]) / SCALER_SCALES[i]);
+                    const [p0, p1] = evaluateTree(scaled);
+                    const is_diabetic = (p1 >= p0);
+                    const conf = is_diabetic ? p1 : p0;
+                    return {
+                        is_diabetic: is_diabetic,
+                        label: is_diabetic ? "High Risk" : "Low Risk",
+                        probability_diabetic: Math.round(p1 * 1000) / 10,
+                        probability_nondiabetic: Math.round(p0 * 1000) / 10,
+                        confidence: Math.round(conf * 1000) / 10
+                    };
                 }
-            }
-        }
 
-        function predictClinicalRisk(vals) {
-            const raw = [
-                vals.Pregnancies,
-                vals.Glucose === 0 ? TREE_MEDIANS[1] : vals.Glucose,
-                vals.BloodPressure === 0 ? TREE_MEDIANS[2] : vals.BloodPressure,
-                vals.BMI === 0 ? TREE_MEDIANS[3] : vals.BMI,
-                vals.DiabetesPedigreeFunction,
-                vals.Age
-            ];
-            const scaled = raw.map((v, i) => (v - SCALER_MEANS[i]) / SCALER_SCALES[i]);
-            const [p0, p1] = evaluateTree(scaled);
-            const is_diabetic = (p1 >= p0);
-            const conf = is_diabetic ? p1 : p0;
-            return {
-                is_diabetic: is_diabetic,
-                label: is_diabetic ? "High Risk" : "Low Risk",
-                probability_diabetic: Math.round(p1 * 1000) / 10,
-                probability_nondiabetic: Math.round(p0 * 1000) / 10,
-                confidence: Math.round(conf * 1000) / 10
-            };
-        }
-
-        function clientInference(vals) {
-            return predictClinicalRisk(vals);
-        }
-
-        async function updatePredict() {
-            const vals = getInputs();
-            document.getElementById('val-glucose').innerText = `${vals.Glucose} mg/dL`;
-            document.getElementById('val-bmi').innerText = `${vals.BMI.toFixed(1)} kg/m²`;
-            document.getElementById('val-bp').innerText = `${vals.BloodPressure} mm Hg`;
-            document.getElementById('val-age').innerText = `${vals.Age} yrs`;
-            document.getElementById('val-preg').innerText = `${vals.Pregnancies}`;
-            document.getElementById('val-dpf').innerText = `${vals.DiabetesPedigreeFunction.toFixed(2)}`;
-
-            let res;
-            try {
-                const resp = await fetch('/api/predict', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(vals)
-                });
-                if (resp.ok) {
-                    res = await resp.json();
-                } else {
-                    res = clientInference(vals);
+                function clientInference(vals) {
+                    return predictClinicalRisk(vals);
                 }
-            } catch (e) {
-                res = clientInference(vals);
-            }
 
-            const card = document.getElementById('triage-card');
-            const icon = document.getElementById('triage-icon');
-            const title = document.getElementById('triage-title');
-            const prob = document.getElementById('triage-prob');
-            const desc = document.getElementById('triage-desc');
-            const pFill = document.getElementById('progress-fill');
-            const adv = document.getElementById('advisory-box');
+                async function updatePredict() {
+                    const vals = getInputs();
+                    document.getElementById('val-glucose').innerText = `${vals.Glucose} mg/dL`;
+                    document.getElementById('val-bmi').innerText = `${vals.BMI.toFixed(1)} kg/m²`;
+                    document.getElementById('val-bp').innerText = `${vals.BloodPressure} mm Hg`;
+                    document.getElementById('val-age').innerText = `${vals.Age} yrs`;
+                    document.getElementById('val-preg').innerText = `${vals.Pregnancies}`;
+                    document.getElementById('val-dpf').innerText = `${vals.DiabetesPedigreeFunction.toFixed(2)}`;
 
-            if (res.is_diabetic) {
-                card.className = "triage-card triage-high";
-                icon.innerText = "⚠️";
-                title.innerText = "TRIAGE LEVEL: HIGH RISK";
-                title.style.color = "#ef4444";
-                prob.innerText = `${res.probability_diabetic || res.prob_diabetic}%`;
-                prob.style.color = "#f87171";
-                desc.innerText = "Elevated Risk of Type 2 Diabetes Mellitus";
-                pFill.style.width = `${res.probability_diabetic || res.prob_diabetic}%`;
-                pFill.style.background = "#ef4444";
+                    let res;
+                    try {
+                        const resp = await fetch('/api/predict', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(vals)
+                        });
+                        if (resp.ok) {
+                            res = await resp.json();
+                        } else {
+                            res = clientInference(vals);
+                        }
+                    } catch (e) {
+                        res = clientInference(vals);
+                    }
 
-                adv.innerHTML = `
+                    const card = document.getElementById('triage-card');
+                    const icon = document.getElementById('triage-icon');
+                    const title = document.getElementById('triage-title');
+                    const prob = document.getElementById('triage-prob');
+                    const desc = document.getElementById('triage-desc');
+                    const pFill = document.getElementById('progress-fill');
+                    const adv = document.getElementById('advisory-box');
+
+                    if (res.is_diabetic) {
+                        card.className = "triage-card triage-high";
+                        icon.innerText = "⚠️";
+                        title.innerText = "TRIAGE LEVEL: HIGH RISK";
+                        title.style.color = "#ef4444";
+                        prob.innerText = `${res.probability_diabetic || res.prob_diabetic}%`;
+                        prob.style.color = "#f87171";
+                        desc.innerText = "Elevated Risk of Type 2 Diabetes Mellitus";
+                        pFill.style.width = `${res.probability_diabetic || res.prob_diabetic}%`;
+                        pFill.style.background = "#ef4444";
+
+                        adv.innerHTML = `
                     <strong style="color: #f87171;">⚕️ Recommended Clinical Pathway:</strong><br>
                     • Order confirmatory diagnostic laboratory testing (Fasting Plasma Glucose & HbA1c).<br>
                     • Schedule diabetes self-management education and medical nutrition therapy.<br>
                     • Review cardiovascular risk factors and evaluate for microvascular screening.
                 `;
-            } else {
-                card.className = "triage-card triage-low";
-                icon.innerText = "🛡️";
-                title.innerText = "TRIAGE LEVEL: LOW RISK";
-                title.style.color = "#10b981";
-                prob.innerText = `${res.probability_nondiabetic || res.prob_nondiabetic}%`;
-                prob.style.color = "#34d399";
-                desc.innerText = "Normoglycemic / Low Risk Stratification";
-                pFill.style.width = `${res.probability_diabetic || res.prob_diabetic}%`;
-                pFill.style.background = "#10b981";
+                    } else {
+                        card.className = "triage-card triage-low";
+                        icon.innerText = "🛡️";
+                        title.innerText = "TRIAGE LEVEL: LOW RISK";
+                        title.style.color = "#10b981";
+                        prob.innerText = `${res.probability_nondiabetic || res.prob_nondiabetic}%`;
+                        prob.style.color = "#34d399";
+                        desc.innerText = "Normoglycemic / Low Risk Stratification";
+                        pFill.style.width = `${res.probability_diabetic || res.prob_diabetic}%`;
+                        pFill.style.background = "#10b981";
 
-                adv.innerHTML = `
+                        adv.innerHTML = `
                     <strong style="color: #34d399;">⚕️ Recommended Clinical Pathway:</strong><br>
                     • Routine annual preventive metabolic health screening.<br>
                     • Maintain ADA-aligned balanced nutrition and ≥150 min/week moderate physical activity.<br>
                     • Reassess if clinical symptoms, gestational factors, or BMI elevate.
                 `;
-            }
+                    }
 
-            renderBiomarkerTable(vals);
-        }
-
-        function renderBiomarkerTable(vals) {
-            const rows = [
-                {
-                    name: "Glucose (FPG)",
-                    val: `${vals.Glucose} mg/dL`,
-                    ref: "<100 mg/dL (ADA)",
-                    status: vals.Glucose >= 126 ? "High Risk (Diabetic)" : (vals.Glucose >= 100 ? "Elevated (Prediabetic)" : "Normal (<100 mg/dL)"),
-                    tag: vals.Glucose >= 126 ? "ref-danger" : (vals.Glucose >= 100 ? "ref-warning" : "ref-normal")
-                },
-                {
-                    name: "Body Mass Index (BMI)",
-                    val: `${vals.BMI.toFixed(1)} kg/m²`,
-                    ref: "18.5–24.9 kg/m² (WHO)",
-                    status: vals.BMI >= 30 ? "High Risk (Obese)" : (vals.BMI >= 25 ? "Overweight (25–29.9)" : "Normal (18.5–24.9)"),
-                    tag: vals.BMI >= 30 ? "ref-danger" : (vals.BMI >= 25 ? "ref-warning" : "ref-normal")
-                },
-                {
-                    name: "Diastolic BP",
-                    val: `${vals.BloodPressure} mm Hg`,
-                    ref: "<80 mm Hg (AHA)",
-                    status: vals.BloodPressure >= 90 ? "High (Stage 2)" : (vals.BloodPressure >= 80 ? "Stage 1 Elevated" : "Normal (<80 mm Hg)"),
-                    tag: vals.BloodPressure >= 90 ? "ref-danger" : (vals.BloodPressure >= 80 ? "ref-warning" : "ref-normal")
-                },
-                {
-                    name: "Pedigree Score (DPF)",
-                    val: vals.DiabetesPedigreeFunction.toFixed(2),
-                    ref: "<0.40 Normal",
-                    status: vals.DiabetesPedigreeFunction >= 0.8 ? "Strong Genetic Predisposition" : (vals.DiabetesPedigreeFunction >= 0.4 ? "Moderate Risk" : "Low Genetic Risk"),
-                    tag: vals.DiabetesPedigreeFunction >= 0.8 ? "ref-danger" : (vals.DiabetesPedigreeFunction >= 0.4 ? "ref-warning" : "ref-normal")
-                },
-                {
-                    name: "Patient Age",
-                    val: `${vals.Age} yrs`,
-                    ref: "Age Stratification",
-                    status: vals.Age >= 50 ? "Higher Age Cohort (≥50)" : "Standard Age Cohort",
-                    tag: vals.Age >= 50 ? "ref-warning" : "ref-normal"
-                },
-                {
-                    name: "Pregnancies / Parity",
-                    val: `${vals.Pregnancies}`,
-                    ref: "Obstetric History",
-                    status: vals.Pregnancies >= 6 ? "High Parity (≥6)" : "Standard Parity",
-                    tag: vals.Pregnancies >= 6 ? "ref-warning" : "ref-normal"
+                    renderBiomarkerTable(vals);
                 }
-            ];
 
-            const tbody = document.getElementById('table-biomarkers');
-            tbody.innerHTML = rows.map(r => `
+                function renderBiomarkerTable(vals) {
+                    const rows = [
+                        {
+                            name: "Glucose (FPG)",
+                            val: `${vals.Glucose} mg/dL`,
+                            ref: "<100 mg/dL (ADA)",
+                            status: vals.Glucose >= 126 ? "High Risk (Diabetic)" : (vals.Glucose >= 100 ? "Elevated (Prediabetic)" : "Normal (<100 mg/dL)"),
+                            tag: vals.Glucose >= 126 ? "ref-danger" : (vals.Glucose >= 100 ? "ref-warning" : "ref-normal")
+                        },
+                        {
+                            name: "Body Mass Index (BMI)",
+                            val: `${vals.BMI.toFixed(1)} kg/m²`,
+                            ref: "18.5–24.9 kg/m² (WHO)",
+                            status: vals.BMI >= 30 ? "High Risk (Obese)" : (vals.BMI >= 25 ? "Overweight (25–29.9)" : "Normal (18.5–24.9)"),
+                            tag: vals.BMI >= 30 ? "ref-danger" : (vals.BMI >= 25 ? "ref-warning" : "ref-normal")
+                        },
+                        {
+                            name: "Diastolic BP",
+                            val: `${vals.BloodPressure} mm Hg`,
+                            ref: "<80 mm Hg (AHA)",
+                            status: vals.BloodPressure >= 90 ? "High (Stage 2)" : (vals.BloodPressure >= 80 ? "Stage 1 Elevated" : "Normal (<80 mm Hg)"),
+                            tag: vals.BloodPressure >= 90 ? "ref-danger" : (vals.BloodPressure >= 80 ? "ref-warning" : "ref-normal")
+                        },
+                        {
+                            name: "Pedigree Score (DPF)",
+                            val: vals.DiabetesPedigreeFunction.toFixed(2),
+                            ref: "<0.40 Normal",
+                            status: vals.DiabetesPedigreeFunction >= 0.8 ? "Strong Genetic Predisposition" : (vals.DiabetesPedigreeFunction >= 0.4 ? "Moderate Risk" : "Low Genetic Risk"),
+                            tag: vals.DiabetesPedigreeFunction >= 0.8 ? "ref-danger" : (vals.DiabetesPedigreeFunction >= 0.4 ? "ref-warning" : "ref-normal")
+                        },
+                        {
+                            name: "Patient Age",
+                            val: `${vals.Age} yrs`,
+                            ref: "Age Stratification",
+                            status: vals.Age >= 50 ? "Higher Age Cohort (≥50)" : "Standard Age Cohort",
+                            tag: vals.Age >= 50 ? "ref-warning" : "ref-normal"
+                        },
+                        {
+                            name: "Pregnancies / Parity",
+                            val: `${vals.Pregnancies}`,
+                            ref: "Obstetric History",
+                            status: vals.Pregnancies >= 6 ? "High Parity (≥6)" : "Standard Parity",
+                            tag: vals.Pregnancies >= 6 ? "ref-warning" : "ref-normal"
+                        }
+                    ];
+
+                    const tbody = document.getElementById('table-biomarkers');
+                    tbody.innerHTML = rows.map(r => `
                 <tr>
                     <td style="font-weight: 600; color: #f1f5f9;">${r.name}</td>
                     <td style="font-family: 'JetBrains Mono', monospace; color: var(--teal-light); font-weight: 700;">${r.val}</td>
@@ -1065,65 +1174,65 @@
                     <td><span class="ref-badge ${r.tag}">${r.status}</span></td>
                 </tr>
             `).join('');
-        }
-
-        async function runTestSuite() {
-            const container = document.getElementById('test-results-container');
-            container.style.display = 'block';
-
-            let data;
-            try {
-                const resp = await fetch('/api/test');
-                if (resp.ok) {
-                    data = await resp.json();
-                } else {
-                    data = getStaticTestData();
                 }
-            } catch (e) {
-                data = getStaticTestData();
-            }
 
-            document.getElementById('res-total').innerText = data.total;
-            document.getElementById('res-passed').innerText = data.passed;
-            document.getElementById('res-failed').innerText = data.failed;
-            document.getElementById('res-rate').innerText = `${data.pass_rate}%`;
+                async function runTestSuite() {
+                    const container = document.getElementById('test-results-container');
+                    container.style.display = 'block';
 
-            renderTestTable('test-table-mount', data.results);
-            window.scrollTo({ top: container.offsetTop - 30, behavior: 'smooth' });
-        }
+                    let data;
+                    try {
+                        const resp = await fetch('/api/test');
+                        if (resp.ok) {
+                            data = await resp.json();
+                        } else {
+                            data = getStaticTestData();
+                        }
+                    } catch (e) {
+                        data = getStaticTestData();
+                    }
 
-        function closeTestPanel() {
-            document.getElementById('test-results-container').style.display = 'none';
-        }
+                    document.getElementById('res-total').innerText = data.total;
+                    document.getElementById('res-passed').innerText = data.passed;
+                    document.getElementById('res-failed').innerText = data.failed;
+                    document.getElementById('res-rate').innerText = `${data.pass_rate}%`;
 
-        function getStaticTestData() {
-            let passed = 0;
-            const results = TEST_CASES.map(tc => {
-                const res = predictClinicalRisk(tc.vals);
-                const isPass = (res.label === tc.expected);
-                if (isPass) passed++;
-                return {
-                    "Test ID": tc.id,
-                    "Expected": tc.expected,
-                    "Predicted": res.label,
-                    "Confidence": `${res.confidence.toFixed(1)}%`,
-                    "Result": isPass ? "PASS" : "FAIL",
-                    "Biomarkers": tc.vals
-                };
-            });
-            return {
-                total: TEST_CASES.length,
-                passed: passed,
-                failed: TEST_CASES.length - passed,
-                pass_rate: Math.round((passed / TEST_CASES.length) * 100),
-                results: results
-            };
-        }
+                    renderTestTable('test-table-mount', data.results);
+                    window.scrollTo({ top: container.offsetTop - 30, behavior: 'smooth' });
+                }
 
-        function renderTestTable(mountId, results) {
-            if (!results) results = getStaticTestData().results;
-            const mount = document.getElementById(mountId);
-            mount.innerHTML = `
+                function closeTestPanel() {
+                    document.getElementById('test-results-container').style.display = 'none';
+                }
+
+                function getStaticTestData() {
+                    let passed = 0;
+                    const results = TEST_CASES.map(tc => {
+                        const res = predictClinicalRisk(tc.vals);
+                        const isPass = (res.label === tc.expected);
+                        if (isPass) passed++;
+                        return {
+                            "Test ID": tc.id,
+                            "Expected": tc.expected,
+                            "Predicted": res.label,
+                            "Confidence": `${res.confidence.toFixed(1)}%`,
+                            "Result": isPass ? "PASS" : "FAIL",
+                            "Biomarkers": tc.vals
+                        };
+                    });
+                    return {
+                        total: TEST_CASES.length,
+                        passed: passed,
+                        failed: TEST_CASES.length - passed,
+                        pass_rate: Math.round((passed / TEST_CASES.length) * 100),
+                        results: results
+                    };
+                }
+
+                function renderTestTable(mountId, results) {
+                    if (!results) results = getStaticTestData().results;
+                    const mount = document.getElementById(mountId);
+                    mount.innerHTML = `
                 <table class="clinical-table">
                     <thead>
                         <tr>
@@ -1137,9 +1246,9 @@
                     </thead>
                     <tbody>
                         ${results.map(r => {
-                            const bm = r.Biomarkers;
-                            const bmStr = `Preg: ${bm.Pregnancies} | FPG: ${bm.Glucose} mg/dL | DBP: ${bm.BloodPressure} mm Hg | BMI: ${bm.BMI} | DPF: ${bm.DiabetesPedigreeFunction} | Age: ${bm.Age}y`;
-                            return `
+                        const bm = r.Biomarkers;
+                        const bmStr = `Preg: ${bm.Pregnancies} | FPG: ${bm.Glucose} mg/dL | DBP: ${bm.BloodPressure} mm Hg | BMI: ${bm.BMI} | DPF: ${bm.DiabetesPedigreeFunction} | Age: ${bm.Age}y`;
+                        return `
                                 <tr>
                                     <td><strong>${r['Test ID']}</strong></td>
                                     <td><span class="ref-badge ${r.Result === 'PASS' ? 'ref-normal' : 'ref-danger'}">${r.Result === 'PASS' ? '✅ PASS' : '❌ FAIL'}</span></td>
@@ -1149,14 +1258,15 @@
                                     <td style="color: var(--text-muted); font-size: 0.78rem;">${bmStr}</td>
                                 </tr>
                             `;
-                        }).join('')}
+                    }).join('')}
                     </tbody>
                 </table>
             `;
-        }
+                }
 
-        // Initialize on page load
-        updatePredict();
-    </script>
+                // Initialize on page load
+                updatePredict();
+            </script>
 </body>
+
 </html>
