@@ -1,5 +1,6 @@
 import os
 import urllib.request
+from pathlib import Path
 
 import joblib
 import numpy as np
@@ -166,18 +167,29 @@ def save_model(model, file_path=MODEL_FILE):
     return file_path
 
 
-def load_model(file_path=MODEL_FILE):
+def load_model(file_path=None):
     """Load trained pipeline from disk."""
+    base_dir = Path(__file__).resolve().parent
     candidates = [
         file_path,
+        base_dir / "model" / "diabetes_6feature_model.joblib",
+        base_dir / "diabetes_6feature_model.joblib",
+        base_dir / "api" / "diabetes_6feature_model.joblib",
+        base_dir / "diabetes_tree_model.joblib",
+        base_dir / "diabetes_model.joblib",
         "model/diabetes_6feature_model.joblib",
         "diabetes_6feature_model.joblib",
+        "api/diabetes_6feature_model.joblib",
         "diabetes_tree_model.joblib",
-        "diabetes_model.joblib"
+        "diabetes_model.joblib",
+        MODEL_FILE
     ]
     for p in candidates:
-        if os.path.exists(p):
-            return joblib.load(p)
+        if p and os.path.exists(str(p)):
+            try:
+                return joblib.load(str(p))
+            except Exception:
+                continue
     return None
 
 

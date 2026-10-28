@@ -9,6 +9,8 @@ root_dir = Path(__file__).resolve().parent.parent
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
 
+import joblib
+
 from diabetes_model import (
     FEATURES,
     VALID_RANGES,
@@ -27,7 +29,26 @@ _CACHED_MODEL = None
 def get_model():
     global _CACHED_MODEL
     if _CACHED_MODEL is None:
-        _CACHED_MODEL = load_model()
+        root_dir = Path(__file__).resolve().parent.parent
+        api_dir = Path(__file__).resolve().parent
+        possible_paths = [
+            api_dir / "diabetes_6feature_model.joblib",
+            root_dir / "model" / "diabetes_6feature_model.joblib",
+            root_dir / "diabetes_6feature_model.joblib",
+            root_dir / "diabetes_tree_model.joblib",
+            root_dir / "diabetes_model.joblib",
+            Path("diabetes_6feature_model.joblib"),
+            Path("model/diabetes_6feature_model.joblib"),
+        ]
+        for p in possible_paths:
+            if p.exists():
+                try:
+                    _CACHED_MODEL = joblib.load(str(p))
+                    break
+                except Exception:
+                    pass
+        if _CACHED_MODEL is None:
+            _CACHED_MODEL = load_model()
     return _CACHED_MODEL
 
 
@@ -116,7 +137,7 @@ class handler(BaseHTTPRequestHandler):
         path = self.path.split("?")[0].rstrip("/")
         model = get_model()
 
-        if path in ("/api/test", "/api/run-tests"):
+        if path in ("/api/test", "/api/run-tests") or path.endswith("/test") or path.endswith("/run-tests"):
             try:
                 passed, total, results = execute_test_suite(model)
                 self.send_json({
@@ -131,7 +152,7 @@ class handler(BaseHTTPRequestHandler):
                 self.send_json({"status": "error", "message": str(e)}, 500)
             return
 
-        if path in ("/api/health", "/api"):
+        if path in ("/api/health", "/api", "/api/index.py", "") or path.endswith("/health"):
             self.send_json({
                 "status": "healthy",
                 "service": "DiaPredict AI CDSS Vercel Serverless API",
@@ -159,7 +180,7 @@ class handler(BaseHTTPRequestHandler):
             self.send_json({"status": "error", "message": "Invalid JSON body"}, 400)
             return
 
-        if path in ("/api/predict", "/api/assess"):
+        if path in ("/api/predict", "/api/assess") or path.endswith("/predict") or path.endswith("/assess"):
             try:
                 # Extract and cast the 6 features
                 vals = {
@@ -195,7 +216,7 @@ class handler(BaseHTTPRequestHandler):
                 self.send_json({"status": "error", "message": str(e)}, 500)
             return
 
-        if path in ("/api/test", "/api/run-tests"):
+        if path in ("/api/test", "/api/run-tests") or path.endswith("/test") or path.endswith("/run-tests"):
             try:
                 passed, total, results = execute_test_suite(model)
                 self.send_json({

@@ -823,26 +823,119 @@
             };
         }
 
-        // Fast client-side fallback decision tree inference
-        function clientInference(vals) {
-            let p_diab = 0.15;
-            if (vals.Glucose >= 155) p_diab += 0.55;
-            else if (vals.Glucose >= 126) p_diab += 0.35;
-            else if (vals.Glucose >= 100) p_diab += 0.15;
+        // Exact mathematical decision tree pipeline implementation in pure JS
+        const TREE_MEDIANS = [3.0, 117.0, 72.0, 32.4, 0.3825, 29.0];
+        const SCALER_MEANS = [3.81921824, 121.67100977, 72.14006515, 32.44820847, 0.47742834, 33.36644951];
+        const SCALER_SCALES = [3.31144822, 29.97935076, 12.26511926, 6.81856216, 0.33003119, 11.8237979];
 
-            if (vals.BMI >= 35) p_diab += 0.20;
-            else if (vals.BMI >= 30) p_diab += 0.12;
+        function evaluateTree(x) {
+            if (x[1] <= 0.19443350) { // Glucose
+                if (x[3] <= -0.81369185) { // BMI
+                    if (x[4] <= 0.53047004) { // DiabetesPedigreeFunction
+                        return [1.00000000, 0.00000000];
+                    } else {
+                        return [0.91043439, 0.08956561];
+                    }
+                } else {
+                    if (x[5] <= -0.49615610) { // Age
+                        if (x[3] <= -0.16839452) { // BMI
+                            if (x[1] <= -0.55608308) { // Glucose
+                                return [1.00000000, 0.00000000];
+                            } else {
+                                return [0.91452991, 0.08547009];
+                            }
+                        } else {
+                            if (x[4] <= 0.01082219) { // DiabetesPedigreeFunction
+                                if (x[2] <= -0.09295182) { // BloodPressure
+                                    return [1.00000000, 0.00000000];
+                                } else {
+                                    return [0.71761384, 0.28238616];
+                                }
+                            } else {
+                                return [0.63287783, 0.36712217];
+                            }
+                        }
+                    } else {
+                        if (x[1] <= -1.07310563) { // Glucose
+                            return [0.86018875, 0.13981125];
+                        } else {
+                            if (x[4] <= 0.13050785) { // DiabetesPedigreeFunction
+                                if (x[1] <= -0.47269236) { // Glucose
+                                    return [0.66523195, 0.33476805];
+                                } else {
+                                    return [0.40508383, 0.59491617];
+                                }
+                            } else {
+                                if (x[0] <= 0.20558430) { // Pregnancies
+                                    return [0.34853420, 0.65146580];
+                                } else {
+                                    return [0.14323963, 0.85676037];
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                if (x[1] <= 1.09505337) { // Glucose
+                    if (x[3] <= -0.36638346) { // BMI
+                        if (x[3] <= -0.74036261) { // BMI
+                            return [0.77212305, 0.22787695];
+                        } else {
+                            return [0.57219251, 0.42780749];
+                        }
+                    } else {
+                        if (x[4] <= -0.50276563) { // DiabetesPedigreeFunction
+                            return [0.44521498, 0.55478502];
+                        } else {
+                            if (x[2] <= 0.07011223) { // BloodPressure
+                                return [0.10625621, 0.89374379];
+                            } else {
+                                return [0.27648579, 0.72351421];
+                            }
+                        }
+                    }
+                } else {
+                    if (x[0] <= 0.80954966) { // Pregnancies
+                        if (x[1] <= 1.49532896) { // Glucose
+                            return [0.23132356, 0.76867644];
+                        } else {
+                            if (x[4] <= 0.30776381) { // DiabetesPedigreeFunction
+                                return [0.05078310, 0.94921690];
+                            } else {
+                                return [0.11797133, 0.88202867];
+                            }
+                        }
+                    } else {
+                        return [0.01696528, 0.98303472];
+                    }
+                }
+            }
+        }
 
-            if (vals.Age >= 50) p_diab += 0.10;
-            if (vals.DiabetesPedigreeFunction >= 0.8) p_diab += 0.10;
-
-            p_diab = Math.min(Math.max(p_diab, 0.05), 0.98);
-            const is_diabetic = p_diab >= 0.50;
+        function predictClinicalRisk(vals) {
+            const raw = [
+                vals.Pregnancies,
+                vals.Glucose === 0 ? TREE_MEDIANS[1] : vals.Glucose,
+                vals.BloodPressure === 0 ? TREE_MEDIANS[2] : vals.BloodPressure,
+                vals.BMI === 0 ? TREE_MEDIANS[3] : vals.BMI,
+                vals.DiabetesPedigreeFunction,
+                vals.Age
+            ];
+            const scaled = raw.map((v, i) => (v - SCALER_MEANS[i]) / SCALER_SCALES[i]);
+            const [p0, p1] = evaluateTree(scaled);
+            const is_diabetic = (p1 >= p0);
+            const conf = is_diabetic ? p1 : p0;
             return {
                 is_diabetic: is_diabetic,
-                prob_diabetic: Math.round(p_diab * 100),
-                prob_nondiabetic: Math.round((1 - p_diab) * 100)
+                label: is_diabetic ? "High Risk" : "Low Risk",
+                probability_diabetic: Math.round(p1 * 1000) / 10,
+                probability_nondiabetic: Math.round(p0 * 1000) / 10,
+                confidence: Math.round(conf * 1000) / 10
             };
+        }
+
+        function clientInference(vals) {
+            return predictClinicalRisk(vals);
         }
 
         async function updatePredict() {
@@ -1004,21 +1097,26 @@
         }
 
         function getStaticTestData() {
+            let passed = 0;
+            const results = TEST_CASES.map(tc => {
+                const res = predictClinicalRisk(tc.vals);
+                const isPass = (res.label === tc.expected);
+                if (isPass) passed++;
+                return {
+                    "Test ID": tc.id,
+                    "Expected": tc.expected,
+                    "Predicted": res.label,
+                    "Confidence": `${res.confidence.toFixed(1)}%`,
+                    "Result": isPass ? "PASS" : "FAIL",
+                    "Biomarkers": tc.vals
+                };
+            });
             return {
-                total: 8,
-                passed: 8,
-                failed: 0,
-                pass_rate: 100,
-                results: [
-                    { "Test ID": "TC1", "Expected": "Low Risk", "Predicted": "Low Risk", "Confidence": "100.0%", "Result": "PASS", "Biomarkers": TEST_CASES[0].vals },
-                    { "Test ID": "TC2", "Expected": "High Risk", "Predicted": "High Risk", "Confidence": "88.2%", "Result": "PASS", "Biomarkers": TEST_CASES[1].vals },
-                    { "Test ID": "TC3", "Expected": "High Risk", "Predicted": "High Risk", "Confidence": "59.5%", "Result": "PASS", "Biomarkers": TEST_CASES[2].vals },
-                    { "Test ID": "TC4", "Expected": "Low Risk", "Predicted": "Low Risk", "Confidence": "66.5%", "Result": "PASS", "Biomarkers": TEST_CASES[3].vals },
-                    { "Test ID": "TC5", "Expected": "High Risk", "Predicted": "High Risk", "Confidence": "94.9%", "Result": "PASS", "Biomarkers": TEST_CASES[4].vals },
-                    { "Test ID": "TC6", "Expected": "High Risk", "Predicted": "High Risk", "Confidence": "72.4%", "Result": "PASS", "Biomarkers": TEST_CASES[5].vals },
-                    { "Test ID": "TC7", "Expected": "Low Risk", "Predicted": "Low Risk", "Confidence": "100.0%", "Result": "PASS", "Biomarkers": TEST_CASES[6].vals },
-                    { "Test ID": "TC8", "Expected": "Low Risk", "Predicted": "Low Risk", "Confidence": "100.0%", "Result": "PASS", "Biomarkers": TEST_CASES[7].vals }
-                ]
+                total: TEST_CASES.length,
+                passed: passed,
+                failed: TEST_CASES.length - passed,
+                pass_rate: Math.round((passed / TEST_CASES.length) * 100),
+                results: results
             };
         }
 
